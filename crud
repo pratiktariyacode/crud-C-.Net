@@ -1,0 +1,149 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WindowsFormsApp5
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        //data table show 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Pratik\\source\\repos\\WindowsFormsApp5\\WindowsFormsApp5\\bin\\Debug\\Database1.mdf;Integrated Security=True");
+                con.Open();
+                SqlCommand cmd = new SqlCommand("select * from data1", con);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                dataGridView1.DataSource = dt;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("error");
+            }
+
+            
+        }
+
+        //data insert 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Pratik\\source\\repos\\WindowsFormsApp5\\WindowsFormsApp5\\bin\\Debug\\Database1.mdf;Integrated Security=True");
+                con.Open();
+                SqlCommand cmd = new SqlCommand("insert into data1 (username , password) values (@username , @password)", con);
+                cmd.Parameters.AddWithValue("@username", textBox1.Text);
+                cmd.Parameters.AddWithValue("@password", textBox2.Text);
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                MessageBox.Show("create");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("error");
+            }
+        }
+
+        //data update
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Pratik\\source\\repos\\WindowsFormsApp5\\WindowsFormsApp5\\bin\\Debug\\Database1.mdf;Integrated Security=True");
+                con.Open();
+                SqlCommand cmd = new SqlCommand("update data1 set password=@password where username=@username", con);
+                cmd.Parameters.AddWithValue("@username", textBox1.Text);
+                cmd.Parameters.AddWithValue("@password", textBox2.Text);
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+
+                MessageBox.Show("Update");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("error");
+            }
+        }
+
+         //data table update
+        private void button5_Click(object sender, EventArgs e)
+        {    
+            try
+            {
+                SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Pratik\\source\\repos\\WindowsFormsApp5\\WindowsFormsApp5\\bin\\Debug\\Database1.mdf;Integrated Security=True");
+                con.Open();
+                SqlCommand cmd = new SqlCommand("select * from data1", con);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                dataGridView1.DataSource = dt;
+            }
+            catch (Exception ex) {
+                MessageBox.Show("error");
+            }
+                
+        }
+
+
+
+        //data delete
+        private void button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Pratik\\source\\repos\\WindowsFormsApp5\\WindowsFormsApp5\\bin\\Debug\\Database1.mdf;Integrated Security=True");
+                con.Open();
+                SqlCommand cmd = new SqlCommand("delete data1 where username=@username", con);
+                cmd.Parameters.AddWithValue("@username", textBox1.Text);
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                MessageBox.Show("delete");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("error");
+            }
+        }
+
+        //table data select
+        private void button4_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Pratik\\source\\repos\\WindowsFormsApp5\\WindowsFormsApp5\\bin\\Debug\\Database1.mdf;Integrated Security=True");
+                con.Open();
+                SqlCommand cmd = new SqlCommand("select * from data1 where username=@username", con);
+                cmd.Parameters.AddWithValue("@username", textBox1.Text);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                dataGridView1.DataSource = dt;
+                
+            }
+            catch (Exception ex) {
+                MessageBox.Show("error");
+            }
+        }
+    }
+}
